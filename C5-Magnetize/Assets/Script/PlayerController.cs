@@ -20,4 +20,21 @@ public class PlayerController : MonoBehaviour
         // Move Object
         rb2D.velocity = -transform.up * moveSpeed;
     }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+            //Hide Game Object
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("LevelClear!");
+        }
+    }
 }
