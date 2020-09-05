@@ -70,8 +70,7 @@ public class PlayerController : MonoBehaviour
                 isPulled = true;
             }
 
-            
-
+    
         }
 
         if (Input.GetKeyUp(KeyCode.Z))
