@@ -11,12 +11,18 @@ public class PlayerController : MonoBehaviour
     private GameObject closestTower;
     private GameObject hookedTower;
     private bool isPulled = false;
-
+    private UIController uiControl;
+    private AudioSource myAudio;
+    private bool isCrashed = false;
+    public Vector3 startPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         rb2D = this.gameObject.GetComponent<Rigidbody2D>();
+        uiControl = GameObject.Find("Canvas").GetComponent<UIController>();
+        myAudio = this.gameObject.GetComponent<AudioSource>();
+        startPosition = new Vector3(-8f, 2.8f, 0);
     }
 
     // Update is called once per frame
@@ -27,6 +33,23 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Z) && !isPulled)
         {
+            rb2D.angularVelocity = 0;
+
+            if (isCrashed)
+            {
+                if (!myAudio.isPlaying)
+                {
+                    //Restart scene
+                    restartPosition();
+                }
+            }
+            else
+            {
+                //Move the object
+                rb2D.velocity = -transform.up * moveSpeed;
+                rb2D.angularVelocity = 0f;
+            }
+
             if (closestTower != null && hookedTower == null)
             {
                 hookedTower = closestTower;
@@ -45,11 +68,13 @@ public class PlayerController : MonoBehaviour
                 //Angular Velocity
                 rb2D.angularVelocity = -rotateSpeed / distance;
                 isPulled = true;
-
             }
+
+            
+
         }
 
-        if(Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.Z))
         {
             isPulled = false;
             hookedTower = null;
@@ -61,8 +86,14 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Wall")
         {
-            //Hide Game Object
-            this.gameObject.SetActive(false);
+            if (!isCrashed)
+            {
+                //Play SFX
+                myAudio.Play();
+                rb2D.velocity = new Vector3(0f, 0f, 0f);
+                rb2D.angularVelocity = 0f;
+                isCrashed = true;
+            }
         }
     }
 
@@ -71,6 +102,7 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Goal")
         {
             Debug.Log("LevelClear!");
+            uiControl.endGame();
         }
     }
 
@@ -97,5 +129,19 @@ public class PlayerController : MonoBehaviour
             // Change tower color back to white
             collision.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
+    }
+
+    public void restartPosition()
+    {
+        this.transform.position = startPosition;
+        this.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        isCrashed = false;
+
+        if(closestTower)
+        {
+            closestTower.GetComponent<SpriteRenderer>().color = Color.white;
+            closestTower = null;
+        }
+
     }
 }
