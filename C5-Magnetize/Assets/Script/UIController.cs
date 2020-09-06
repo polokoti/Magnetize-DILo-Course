@@ -62,8 +62,8 @@ public class UIController : MonoBehaviour
 
     public void quitGame()
     {
-        Time.timeScale = 1;
         Application.Quit();
+        Debug.Log("Exit");
     }
 
     public void endGame()
