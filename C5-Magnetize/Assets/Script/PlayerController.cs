@@ -31,9 +31,8 @@ public class PlayerController : MonoBehaviour
         // Move Object
         rb2D.velocity = -transform.up * moveSpeed;
 
-        if(Input.GetKey(KeyCode.Z) && !isPulled)
+        if(Input.GetKeyDown(KeyCode.Z) && !isPulled)
         {
-            rb2D.angularVelocity = 0;
 
             if (isCrashed)
             {
@@ -75,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Z))
         {
+            rb2D.angularVelocity = 0;
             isPulled = false;
             hookedTower = null;
         }

@@ -796,7 +796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662853418}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24, y: -3.12, z: -19.074625}
+  m_LocalPosition: {x: -8.22, y: -3.12, z: -19.074625}
   m_LocalScale: {x: 0.9871875, y: 6.3056254, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   pullForce: 100
-  rotateSpeed: 250
+  rotateSpeed: 360
   startPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &1105731277
 Rigidbody2D:
