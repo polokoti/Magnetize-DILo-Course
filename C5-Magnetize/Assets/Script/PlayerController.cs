@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         // Move Object
         rb2D.velocity = -transform.up * moveSpeed;
 
-        if(Input.GetKeyDown(KeyCode.Z) && !isPulled)
+        if(Input.GetKeyDown(KeyCode.Mouse0) && !isPulled)
         {
 
             if (isCrashed)
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     
         }
 
-        if (Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             rb2D.angularVelocity = 0;
             isPulled = false;
